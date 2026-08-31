@@ -5,6 +5,31 @@ it tells you which sorting algorithm to use and why.
 
 ---
 
+## Project Structure
+
+```angular2html
+src/
+├── main/java/org/complexity/
+│   │   Main.java                ← Entry point
+│   │
+│   ├── analyzer/
+│   │       ArrayAnalyzer.java   ← Analyzes size, sortedness, uniqueness and type
+│   │
+│   ├── model/
+│   │       Algorithm.java       ← Sorting algorithms enum with time/space complexity
+│   │       DataProfile.java     ← Snapshot of the analyzed array's characteristics
+│   │       UserPreference.java  ← What the user cares about (speed, memory, stability)
+│   │
+│   └── scoring/
+│           AlgorithmScore.java  ← Algorithm + its score + reasons
+│           ScoringEngine.java   ← Scores every algorithm and picks the best one
+│
+└── test/java/org/complexity/
+        ArrayAnalyzerTest.java   ← Unit tests for the analyzer
+```
+
+---
+
 ## The Problem
 
 Picking a sorting algorithm is usually either blind ("just use QuickSort")
