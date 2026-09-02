@@ -74,17 +74,16 @@ Recommendation → best algorithm + why
 ## Quick Start
 
 ```java
-ArrayAnalyzer<Integer> analyzer = new ArrayAnalyzer<>();
-ScoringEngine engine = new ScoringEngine();
+Complexity<Integer> c = new Complexity.Builder<>(
+        List.of(3, 1, 4, 1, 5, 9, 2, 6))
+        .speedOverMemory(true)
+        .needsStable(false)
+        .memoryConstrained(false)
+        .build();
 
-List<Integer> myList = List.of(3, 1, 4, 1, 5, 9, 2, 6);
-UserPreference preference = new UserPreference(true, false, false);
-
-DataProfile profile = analyzer.analyze(myList);
-AlgorithmScore result = engine.recommend(profile, preference);
-
+AlgorithmScore result = c.analyze();
 System.out.println(result.getAlgorithm().getDisplayName());
-System.out.println(result.getReason());
+        System.out.println(result.getReason());
 ```
 
 ---
@@ -97,4 +96,4 @@ System.out.println(result.getReason());
 
 ---
 
-v1.0 — works. future versions will make it better. that's the deal.
+v1.1 — works. future versions will make it better. that's the deal.
