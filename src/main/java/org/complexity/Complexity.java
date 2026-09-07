@@ -43,14 +43,7 @@ public class Complexity<T extends Comparable<T>> {
         ScoringEngine scoringEngine;
         UserPreference userPreference;
         public Complexity build() {
-
-            if (arrayList == null)
-                throw new IllegalArgumentException("List cannot be null");
-            if (arrayList.isEmpty())
-                throw new IllegalArgumentException("List cannot be empty");
-            if (arrayList.contains(null))
-                throw new IllegalArgumentException("List cannot contain null elements");
-
+            validation();
             arrayAnalyzer = new ArrayAnalyzer<>();
             scoringEngine = new ScoringEngine();
             userPreference = new UserPreference(
@@ -59,6 +52,14 @@ public class Complexity<T extends Comparable<T>> {
                     memoryConstrained
             );
             return new Complexity(this);
+        }
+        private void validation() {
+            if (arrayList == null)
+                throw new IllegalArgumentException("List cannot be null");
+            if (arrayList.isEmpty())
+                throw new IllegalArgumentException("List cannot be empty");
+            if (arrayList.contains(null))
+                throw new IllegalArgumentException("List cannot contain null elements");
         }
     }
     public AlgorithmScore analyze() {
