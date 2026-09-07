@@ -43,6 +43,7 @@ public class Complexity<T extends Comparable<T>> {
         ScoringEngine scoringEngine;
         UserPreference userPreference;
         public Complexity build() {
+            validation();
             arrayAnalyzer = new ArrayAnalyzer<>();
             scoringEngine = new ScoringEngine();
             userPreference = new UserPreference(
@@ -51,6 +52,24 @@ public class Complexity<T extends Comparable<T>> {
                     memoryConstrained
             );
             return new Complexity(this);
+        }
+        /**
+         * <h5>Array rejection causes</h5>
+         * <p>Complexity needs a list for recommending the best and efficient
+         * sorting algorithm. Any value or action with undefine behavior will be rejected.</p>
+         * <b>Causes of exceptions are : </b>
+         * <ul>
+         *     <li>{@code null} : list cannot be null or contain null.</li>
+         *     <li>{@code Empty} : list cannot be empty.</li>
+         * </ul>
+         */
+        private void validation() {
+            if (arrayList == null)
+                throw new IllegalArgumentException("List cannot be null");
+            if (arrayList.isEmpty())
+                throw new IllegalArgumentException("List cannot be empty");
+            if (arrayList.contains(null))
+                throw new IllegalArgumentException("List cannot contain null elements");
         }
     }
     public AlgorithmScore analyze() {
