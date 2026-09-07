@@ -85,12 +85,20 @@ class ArrayAnalyzerTest {
         DataProfile profile = stringAnalyzer.analyze(list);
         assertFalse(profile.isIntegerType());
     }
+
+    /**
+     * Will throw an exception if the list is {@code null}.
+     */
     @Test
     void shouldThrowExceptionIfListNull() {
         assertThrows(IllegalArgumentException.class,
                 () -> new Complexity.Builder<Integer>(null).build()
         );
     }
+
+    /**
+     * Will throw an exception if the list is {@code Empty}.
+     */
     @Test
     void shouldThrowExceptionIfListEmpty() {
         assertThrows(IllegalArgumentException.class,
@@ -98,6 +106,10 @@ class ArrayAnalyzerTest {
                         List.of()).build()
                 );
     }
+
+    /**
+     * Will throw an exception if list contain {@code null}.
+     */
     @Test
     void shouldThrowExceptionIfListContainsNull() {
         List<Integer> list = new ArrayList<>();
