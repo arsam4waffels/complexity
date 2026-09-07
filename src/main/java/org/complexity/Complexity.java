@@ -43,6 +43,14 @@ public class Complexity<T extends Comparable<T>> {
         ScoringEngine scoringEngine;
         UserPreference userPreference;
         public Complexity build() {
+
+            if (arrayList == null)
+                throw new IllegalArgumentException("List cannot be null");
+            if (arrayList.isEmpty())
+                throw new IllegalArgumentException("List cannot be empty");
+            if (arrayList.contains(null))
+                throw new IllegalArgumentException("List cannot contain null elements");
+
             arrayAnalyzer = new ArrayAnalyzer<>();
             scoringEngine = new ScoringEngine();
             userPreference = new UserPreference(
