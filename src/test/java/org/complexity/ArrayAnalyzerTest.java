@@ -5,6 +5,7 @@ import org.complexity.model.DataProfile;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -83,5 +84,28 @@ class ArrayAnalyzerTest {
         List<String> list = List.of("skibidi", "sib", "moz");
         DataProfile profile = stringAnalyzer.analyze(list);
         assertFalse(profile.isIntegerType());
+    }
+    @Test
+    void shouldThrowExceptionIfListNull() {
+        assertThrows(IllegalArgumentException.class,
+                () -> new Complexity.Builder<Integer>(null).build()
+        );
+    }
+    @Test
+    void shouldThrowExceptionIfListEmpty() {
+        assertThrows(IllegalArgumentException.class,
+                () -> new Complexity.Builder<Integer>(
+                        List.of()).build()
+                );
+    }
+    @Test
+    void shouldThrowExceptionIfListContainsNull() {
+        List<Integer> list = new ArrayList<>();
+        list.add(1);
+        list.add(null);
+        list.add(3);
+        assertThrows(IllegalArgumentException.class,
+                () -> new Complexity.Builder<>(list).build()
+        );
     }
 }
