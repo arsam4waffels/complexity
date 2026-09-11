@@ -4,10 +4,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * <h5>InsertionSort — the underdog.</h5>
- * <p>Takes each element and inserts it in the right place, one by one.</p>
- * <p>Terrible for large arrays — O(n²). But for small or nearly sorted arrays?
- * Absolutely unstoppable. Even beats QuickSort in those cases.</p>
+ * <h5>QuickSort — the overconfident one.</h5>
+ * <p>Picks a pivot, puts smaller elements left, bigger ones right, repeat.</p>
+ * <p>Fast in practice — O(n log n) average.</p>
+ * <p>But give it a sorted array and it becomes a cautionary tale — O(n²).</p>
  */
 public class QuickSortAlgorithm<T extends Comparable<T>> implements SortingAlgorithm<T> {
     @Override

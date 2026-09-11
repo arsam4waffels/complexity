@@ -3,6 +3,12 @@ package org.complexity.algorithms;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * <h5>InsertionSort — the underdog.</h5>
+ * <p>Takes each element and inserts it in the right place, one by one.</p>
+ * <p>Terrible for large arrays — O(n²). But for small or nearly sorted arrays?
+ * Absolutely unstoppable. Even beats QuickSort in those cases.</p>
+ */
 public class InsertionSortAlgorithm<T extends Comparable<T>> implements SortingAlgorithm<T> {
 
     @Override
