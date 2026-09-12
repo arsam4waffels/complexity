@@ -15,5 +15,15 @@ public class Main {
         // AlgorithmScore result = c.analyze();
         List<Integer> sorted = c.sort(Algorithm.MERGESORT);
         System.out.println(sorted);
+
+        // just testing if other algorithms work
+        // probably should write a hole test for each one of them in the future
+        // cant promise you that.
+        System.out.println(c.sort(Algorithm.QUICKSORT));
+        System.out.println(c.sort(Algorithm.TIMSORT));
+        System.out.println(c.sort(Algorithm.HEAPSORT));
+        System.out.println(c.sort(Algorithm.INSERTION_SORT));
+        System.out.println(c.sort(Algorithm.COUNTING_SORT));
+        System.out.println(c.sort(Algorithm.RADIX_SORT));
     }
 }
