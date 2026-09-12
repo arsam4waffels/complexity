@@ -1,29 +1,68 @@
 package org.complexity;
 
+import org.complexity.algorithms.CountingSortAlgorithm;
+import org.complexity.algorithms.HeapSortAlgorithm;
+import org.complexity.algorithms.InsertionSortAlgorithm;
+import org.complexity.algorithms.MergeSortAlgorithm;
+import org.complexity.algorithms.QuickSortAlgorithm;
+import org.complexity.algorithms.RadixSortAlgorithm;
+import org.complexity.algorithms.SortingAlgorithm;
+import org.complexity.algorithms.TimSortAlgorithm;
 import org.complexity.analyzer.ArrayAnalyzer;
+import org.complexity.model.Algorithm;
 import org.complexity.model.DataProfile;
 import org.complexity.model.UserPreference;
 import org.complexity.scoring.AlgorithmScore;
 import org.complexity.scoring.ScoringEngine;
 
+import java.util.EnumMap;
 import java.util.List;
+import java.util.Map;
 
 public class Complexity<T extends Comparable<T>> {
     private final List<T> arrayList;
     private final ArrayAnalyzer<T> arrayAnalyzer;
     private final ScoringEngine scoringEngine;
     private final UserPreference userPreference;
+    private final Map<Algorithm, SortingAlgorithm<T>> algorithms;
     private Complexity(Builder<T> builder) {
         this.arrayList = builder.arrayList;
         this.arrayAnalyzer = builder.arrayAnalyzer;
         this.scoringEngine = builder.scoringEngine;
         this.userPreference = builder.userPreference;
+        this.algorithms = null;
     }
+
+    @SuppressWarnings("unchecked")
+    private Map<Algorithm, SortingAlgorithm<T>> buildAlgorithmMap() {
+
+        Map<Algorithm, SortingAlgorithm<T>> map = new EnumMap<>(Algorithm.class);
+
+        map.put(Algorithm.QUICKSORT, (SortingAlgorithm<T>) new QuickSortAlgorithm<>());
+        map.put(Algorithm.MERGESORT, (SortingAlgorithm<T>) new MergeSortAlgorithm<>());
+        map.put(Algorithm.TIMSORT, (SortingAlgorithm<T>) new TimSortAlgorithm<>());
+        map.put(Algorithm.HEAPSORT, (SortingAlgorithm<T>) new HeapSortAlgorithm<>());
+        map.put(Algorithm.INSERTION_SORT, (SortingAlgorithm<T>) new InsertionSortAlgorithm<>());
+        map.put(Algorithm.COUNTING_SORT, (SortingAlgorithm<T>) new CountingSortAlgorithm());
+        map.put(Algorithm.RADIX_SORT, (SortingAlgorithm<T>) new RadixSortAlgorithm());
+
+        return map;
+    }
+
+    public List<T> sort(Algorithm algorithm) {
+        SortingAlgorithm<T> sorter = algorithms.get(algorithm);
+        if (sorter == null)
+            throw new IllegalArgumentException("Algorithm not supported: " + algorithm);
+        return sorter.sort(arrayList);
+    }
+
     public static class Builder<T extends Comparable<T>> {
+
         private final List<T> arrayList;
         private boolean speedOverMemory;
         private boolean needsStable;
         private boolean memoryConstrained;
+
         public Builder(List<T> arrayList) {
             this.arrayList = arrayList;
         }
@@ -39,11 +78,15 @@ public class Complexity<T extends Comparable<T>> {
             this.memoryConstrained = memoryConstrained;
             return this;
         }
+
         ArrayAnalyzer<T> arrayAnalyzer;
         ScoringEngine scoringEngine;
         UserPreference userPreference;
+
         public Complexity build() {
+
             validation();
+
             arrayAnalyzer = new ArrayAnalyzer<>();
             scoringEngine = new ScoringEngine();
             userPreference = new UserPreference(
@@ -51,6 +94,7 @@ public class Complexity<T extends Comparable<T>> {
                     needsStable,
                     memoryConstrained
             );
+
             return new Complexity(this);
         }
         /**
@@ -64,17 +108,22 @@ public class Complexity<T extends Comparable<T>> {
          * </ul>
          */
         private void validation() {
+
             if (arrayList == null)
                 throw new IllegalArgumentException("List cannot be null");
+
             if (arrayList.isEmpty())
                 throw new IllegalArgumentException("List cannot be empty");
+
             if (arrayList.contains(null))
                 throw new IllegalArgumentException("List cannot contain null elements");
         }
     }
     public AlgorithmScore analyze() {
+
         DataProfile dataProfile = arrayAnalyzer.analyze(arrayList);
         AlgorithmScore algorithmScore = scoringEngine.recommend(dataProfile, userPreference);
+
         return algorithmScore;
     }
 }
