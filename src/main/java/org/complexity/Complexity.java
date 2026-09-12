@@ -30,9 +30,14 @@ public class Complexity<T extends Comparable<T>> {
         this.arrayAnalyzer = builder.arrayAnalyzer;
         this.scoringEngine = builder.scoringEngine;
         this.userPreference = builder.userPreference;
-        this.algorithms = null;
+        this.algorithms = buildAlgorithmMap();
     }
 
+    /**
+     * <p>Maps each algorithm to its implementation and executes the selected one.</p>
+     * <p><b>Sorting and analysis are intentionally separate</b> — you don't need to analyze
+     * before sorting, and you don't need to sort after analyzing.</p>
+     */
     @SuppressWarnings("unchecked")
     private Map<Algorithm, SortingAlgorithm<T>> buildAlgorithmMap() {
 
@@ -49,6 +54,15 @@ public class Complexity<T extends Comparable<T>> {
         return map;
     }
 
+    /**
+     * <b>Sorts the list using the given algorithm.</b>
+     * <p>Call this directly if you already know which algorithm you want,
+     * or pair it with analyze() to let the system decide for you.</p>
+     *
+     * @param algorithm the algorithm to use
+     * @return a new sorted list — the original is never modified
+     * @throws IllegalArgumentException if the algorithm is not supported
+     */
     public List<T> sort(Algorithm algorithm) {
         SortingAlgorithm<T> sorter = algorithms.get(algorithm);
         if (sorter == null)
