@@ -1,5 +1,6 @@
 package org.complexity;
 
+import org.complexity.model.Algorithm;
 import org.complexity.scoring.AlgorithmScore;
 
 import java.util.List;
@@ -7,14 +8,22 @@ import java.util.List;
 public class Main {
     public static void main(String[] args) {
         Complexity<Integer> c = new Complexity.Builder<>(
-                List.of(9,3,7,1,8,2,6,4,5,0,11,15,13,12,14,10,16,20,18,17,19))
+                List.of(3, 1, 4, 1, 5, 9, 2, 6))
                 .speedOverMemory(true)
-                .needsStable(false)
-                .memoryConstrained(false)
                 .build();
 
-        AlgorithmScore result = c.analyze();
-        System.out.println(result.getAlgorithm().getDisplayName());
-        System.out.println(result.getReason());
+        // AlgorithmScore result = c.analyze();
+        List<Integer> sorted = c.sort(Algorithm.MERGESORT);
+        System.out.println(sorted);
+
+        // just testing if other algorithms work
+        // probably should write a hole test for each one of them in the future
+        // cant promise you that.
+        System.out.println(c.sort(Algorithm.QUICKSORT));
+        System.out.println(c.sort(Algorithm.TIMSORT));
+        System.out.println(c.sort(Algorithm.HEAPSORT));
+        System.out.println(c.sort(Algorithm.INSERTION_SORT));
+        System.out.println(c.sort(Algorithm.COUNTING_SORT));
+        System.out.println(c.sort(Algorithm.RADIX_SORT));
     }
 }
