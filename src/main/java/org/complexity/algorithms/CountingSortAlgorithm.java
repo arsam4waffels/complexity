@@ -4,10 +4,19 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+/**
+ * <h5>CountingSort — the cheat code.</h5>
+ * <p>No comparisons. Just counts how many times each number appears,
+ * then rebuilds the array from those counts.</p>
+ * <p>O(n+k) time — yes, really. Integers only though.</p>
+ * <p>Try it on Strings and it walks out.</p>
+ */
 public class CountingSortAlgorithm implements SortingAlgorithm<Integer> {
     @Override
     public List<Integer> sort(List<Integer> list) {
 
+        // I'm assuming either you don't know how many elements your array has,
+        // or you're just bored.
         if (list.size() == 1) return list;
 
         int min = Collections.min(list);
