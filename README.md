@@ -10,22 +10,33 @@ it tells you which sorting algorithm to use and why.
 ```angular2html
 src/
 ├── main/java/org/complexity/
-│   │   Main.java                ← Entry point
+│   │   Complexity.java             ← Entry point — Builder pattern, analyze() and sort()
+│   │   Main.java                   ← Usage examples
 │   │
 │   ├── analyzer/
-│   │       ArrayAnalyzer.java   ← Analyzes size, sortedness, uniqueness and type
+│   │       SortingAlgorithm.java   ← Interface for all sorting implementations
+│   │       QuickSortAlgorithm.java
+│   │       MergeSortAlgorithm.java
+│   │       TimSortAlgorithm.java
+│   │       HeapSortAlgorithm.java
+│   │       InsertionSortAlgorithm.java
+│   │       CountingSortAlgorithm.java
+│   │       RadixSortAlgorithm.java
+│   │
+│   ├── analyzer/
+│   │       ArrayAnalyzer.java      ← Analyzes size, sortedness, uniqueness and type
 │   │
 │   ├── model/
-│   │       Algorithm.java       ← Sorting algorithms enum with time/space complexity
-│   │       DataProfile.java     ← Snapshot of the analyzed array's characteristics
-│   │       UserPreference.java  ← What the user cares about (speed, memory, stability)
+│   │       Algorithm.java          ← Sorting algorithms enum with time/space complexity
+│   │       DataProfile.java        ← Snapshot of the analyzed array's characteristics
+│   │       UserPreference.java     ← What the user cares about (speed, memory, stability)
 │   │
 │   └── scoring/
-│           AlgorithmScore.java  ← Algorithm + its score + reasons
-│           ScoringEngine.java   ← Scores every algorithm and picks the best one
+│           AlgorithmScore.java     ← Algorithm + its score + reasons
+│           ScoringEngine.java      ← Scores every algorithm and picks the best one
 │
 └── test/java/org/complexity/
-        ArrayAnalyzerTest.java   ← Unit tests for the analyzer
+        ArrayAnalyzerTest.java      ← Unit tests for the analyzer
 ```
 
 ---
@@ -86,6 +97,32 @@ System.out.println(result.getAlgorithm().getDisplayName());
         System.out.println(result.getReason());
 ```
 
+### Sort directly
+```java
+List<Integer> sorted = c.sort(Algorithm.MERGESORT);
+System.out.println(sorted);
+```
+
+### Let the system decide, then sort
+```java
+AlgorithmScore result = c.analyze();
+List<Integer> sorted = c.sort(result.getAlgorithm());
+System.out.println(sorted);
+```
+
+---
+## Algorithms
+
+| Algorithm | Time | Space | Stable |
+|---|---|---|---|
+| QuickSort | O(n log n) | O(log n) | No |
+| MergeSort | O(n log n) | O(n) | Yes |
+| TimSort | O(n log n) | O(n) | Yes |
+| HeapSort | O(n log n) | O(1) | No |
+| Insertion Sort | O(n²) | O(1) | Yes |
+| Counting Sort | O(n+k) | O(k) | Yes |
+| Radix Sort | O(nk) | O(n+k) | Yes |
+
 ---
 
 ## Built With
@@ -96,4 +133,4 @@ System.out.println(result.getAlgorithm().getDisplayName());
 
 ---
 
-v1.1 — works. future versions will make it better. that's the deal.
+v2.0 — works. future versions will make it better. that's the deal.
