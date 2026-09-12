@@ -129,14 +129,10 @@ public class Complexity<T extends Comparable<T>> {
             if (arrayList.isEmpty())
                 throw new IllegalArgumentException("List cannot be empty");
 
-            try {
-
-                if (arrayList.contains(null))
+            // gonna check with a for loop
+            for (T element : arrayList)
+                if (element == null)
                     throw new IllegalArgumentException("List cannot contain null elements");
-
-            } catch (NullPointerException e) {
-                throw new IllegalArgumentException("List cannot contain null elements");
-            }
 
         }
     }
