@@ -4,6 +4,13 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+/**
+ * <h5>RadixSort — CountingSort's cooler cousin.</h5>
+ * <p>Sorts digit by digit, from least significant to most significant.</p>
+ * <p>No direct comparisons between numbers — just looks at digits.</p>
+ * <p>O(nk) where k is the number of digits in the largest number.</p>
+ * <p>Integers only. Still disgustingly fast.</p>
+ */
 public class RadixSortAlgorithm implements SortingAlgorithm<Integer>{
 
     @Override
@@ -16,6 +23,7 @@ public class RadixSortAlgorithm implements SortingAlgorithm<Integer>{
         for (int exp = 1; max / exp > 0; exp *= 10)
             countingByDigit(sorted, exp);
 
+        // enjoy your sorted array! Use it wisely
         return sorted;
     }
     private void countingByDigit(List<Integer> list, int exp) {
