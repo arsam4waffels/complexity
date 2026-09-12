@@ -3,7 +3,16 @@ package org.complexity.algorithms;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * <h5>TimSort — the smart one.</h5>
+ * <p>A hybrid of MergeSort and InsertionSort. Java's own sorting algorithm under the hood.</p>
+ * <p>Finds naturally sorted runs in the array and merges them together.</p>
+ * <p>Loves nearly-sorted arrays like cats love warm laptops.</p>
+ * <p>Always O(n log n), stable, and battle-tested.</p>
+ */
 public class TimSortAlgorithm<T extends Comparable<T>> implements SortingAlgorithm<T> {
+
+    // It divides the array into 32 segments and sorts them using Insertion Sort.
     private static final int RUN = 32;
 
     @Override
@@ -15,6 +24,7 @@ public class TimSortAlgorithm<T extends Comparable<T>> implements SortingAlgorit
         for (int i = 0; i < n; i += RUN)
             insertionSort(copy, i, Math.min(i + RUN - 1, n - 1));
 
+        // We use merge sort algorithm for runs
         for (int size = RUN; size < n; size = 2 * size) {
             for (int left = 0; left < n; left += 2 * size) {
                 int mid = Math.min(left + size - 1, n - 1);
